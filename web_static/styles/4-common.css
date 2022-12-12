@@ -5,15 +5,14 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin-bottom: 61px;
 }
-
 .container {
 	max-width: 1000px;
 	margin-top: 30px;
 	margin-bottom: 30px;
 	background-color: white;
-	height: 70px;
+	height: 100%;
 	width: 100%;
-	border: 1px solid #DDDDDD;
-	border-radius: 4px;
 }
+
