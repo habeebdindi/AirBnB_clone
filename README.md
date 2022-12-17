@@ -53,3 +53,8 @@ sasaka-jr@Sasaka-JR:~/AirBnB_clone$ quit
 
 Thank you for using the HBNB console.
 
+
+
+# FRONT END
+
+An interactive graphical user interface
