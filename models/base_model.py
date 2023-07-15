@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import uuid
-import datetime
+from datetime import datetime
 """
 """
 
@@ -8,7 +8,7 @@ import datetime
 class BaseModel:
     """
     """
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         """
         self.id = str(uuid.uuid4())
