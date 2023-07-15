@@ -27,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         if line not in classes:
             print("** class doesn't exist **")
-        for 
+        # for 
 
     def emptyline(self, line):
         """
