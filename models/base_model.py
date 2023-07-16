@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 import uuid
+import models
 from datetime import datetime
-# from . import storage
-
-
 """
 """
 
@@ -14,7 +12,6 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """
         """
-        from . import storage
         if kwargs:
             for key, value in kwargs.items():
                 if key in  ["created_at", "updated_at"]:
@@ -25,7 +22,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new()
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -37,18 +34,16 @@ class BaseModel:
         """
         """
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """
         """
         dict_kv = {}
         dict_kv['__class__'] = self.__class__.__name__
+        dict_kv['created_at'] = self.created_at.isoformat("T", "microseconds")
+        dict_kv['updated_at'] = self.updated_at.isoformat("T", "microseconds")
         for key, value in self.__dict__.items():
-            if key == "created_at":
-                dict_kv[key] = self.created_at.isoformat("T", "microseconds")
-            elif key == "updated_at":
-                dict_kv[key] = self.updated_at.isoformat("T", "microseconds")
-            else:
+            if key not in dict_kv.keys():
                 dict_kv[key] = value
         return dict_kv

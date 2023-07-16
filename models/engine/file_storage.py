@@ -16,36 +16,42 @@ class FileStorage:
 
     # Private Class Attributes
     __file_path = "file.json"
-    __objects = {} 
+    __objects = {}
 
 
     def all(self):
         """
         Returns the dictionary __objects
         """
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """
         Sets in __objects the obj with key
         """
-        FileStorage.__objects["{}.{}".format(__class__.__name__, self.id)] = obj    # Test this
+        self.__objects["{}.{}".format(obj.__class__.__name__, obj.id)] = obj
 
     def save(self):
         """
         Serializes __objects to the JSON file path
         """
-        with open(FileStorage.__file_path, "w") as f:
-            json.dump(FileStorage.__objects, f)
+
+        serialized = {key: obj.to_dict() for (key, obj) in self.__objects.items()}
+
+        with open(self.__file_path, "w") as f:
+            json.dump(serialized, f)
 
     def reload(self):
-        """
-        Deserializes the JSON file
-        """
+
+        """Deserializes the JSON file"""
+
         try:
-            if os.path.exists(FileStorage.__file_path):
-                with open(FileStorage.__file_path, "r") as f:
-                    myFile = f.read()
-                    FileStorage.__objects = json.loads(myFile)
+            if os.path.exists(self.__file_path):
+                with open(self.__file_path, "r") as f:
+                    myFile = json.load(f)
+
+                    for key, value in myFile.items():
+                        classname, obj_id = key.split('.')
+                        self.__objects[key] = eval(classname)(**value)
         except:
             pass
