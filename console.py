@@ -124,6 +124,23 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
+    def precmd(self, line):
+        """Retrieve all instances of a class
+        """
+        for cl_name in self.classes:
+            if line == "{}.all()".format(cl_name):
+                all_objs = storage.all()
+                obj_list = [str(obj_v) for obj_v in all_objs.values()]
+                print(obj_list)
+                return ''
+            elif line == "{}.count()".format(cl_name):
+                all_objs = storage.all()
+                obj_list = [str(obj_v) for obj_v in all_objs.values()]
+                print(len(obj_list))
+                return ''
+        else:
+            return line
+
     def emptyline(self):
         """Here goes nothing
         """

@@ -40,21 +40,17 @@ class FileStorage:
         """
         Serializes __objects to the JSON file path
         """
-
-        serialized = {key: obj.to_dict() for (key, obj) in self.__objects.items()}
+        srlzd = {key: obj.to_dict() for (key, obj) in self.__objects.items()}
 
         with open(self.__file_path, "w") as f:
-            json.dump(serialized, f)
+            json.dump(srlzd, f)
 
     def reload(self):
         """Deserializes the JSON file"""
-        try:
-            if os.path.exists(self.__file_path):
-                with open(self.__file_path, "r") as f:
-                    myFile = json.load(f)
+        if os.path.exists(self.__file_path):
+            with open(self.__file_path, "r") as f:
+                myFile = json.load(f)
 
-                    for key, value in myFile.items():
-                        classname, obj_id = key.split('.')
-                        self.__objects[key] = eval(classname)(**value)
-        except:
-            pass
+                for key, value in myFile.items():
+                    classname, obj_id = key.split('.')
+                    self.__objects[key] = eval(classname)(**value)
