@@ -2,20 +2,21 @@
 import uuid
 import models
 from datetime import datetime
-"""
+"""This module contains a base class that would be subclassed by many later.
 """
 
 
 class BaseModel:
-    """
+    """Defines methods neeeded for serialisation and desserialisation
     """
     def __init__(self, *args, **kwargs):
-        """
+        """ initialisation
         """
         if kwargs:
             for key, value in kwargs.items():
-                if key in  ["created_at", "updated_at"]:
-                    setattr(self, key, datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f'))
+                if key in ["created_at", "updated_at"]:
+                    setattr(self, key, datetime.strptime
+                            (value, '%Y-%m-%dT%H:%M:%S.%f'))
                 elif key != "__class__":
                     setattr(self, key, value)
         else:
@@ -25,20 +26,20 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
-        """
+        """custom __str__ implementation
         """
         return "[{}] ({}) {}".format(self.__class__.__name__,
                                      self.id, self.__dict__)
 
     def save(self):
-        """
+        """Save changes made on object
         """
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        """
-        """
+        """returns the dictionary representation of instance
+        """-
         dict_kv = {}
         dict_kv['__class__'] = self.__class__.__name__
         dict_kv['created_at'] = self.created_at.isoformat("T", "microseconds")

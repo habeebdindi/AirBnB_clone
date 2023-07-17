@@ -4,7 +4,6 @@ FileStorage - Serializes instances to a JSON file
 and deserializes JSON file to instances.
 """
 import json
-from models.base_model import BaseModel
 import os.path    # Checking if a file exists
 
 
@@ -17,7 +16,6 @@ class FileStorage:
     # Private Class Attributes
     __file_path = "file.json"
     __objects = {}
-
 
     def all(self):
         """
@@ -42,9 +40,7 @@ class FileStorage:
             json.dump(serialized, f)
 
     def reload(self):
-
         """Deserializes the JSON file"""
-
         try:
             if os.path.exists(self.__file_path):
                 with open(self.__file_path, "r") as f:
