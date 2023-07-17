@@ -39,7 +39,7 @@ class BaseModel:
 
     def to_dict(self):
         """returns the dictionary representation of instance
-        """-
+        """
         dict_kv = {}
         dict_kv['__class__'] = self.__class__.__name__
         dict_kv['created_at'] = self.created_at.isoformat("T", "microseconds")
