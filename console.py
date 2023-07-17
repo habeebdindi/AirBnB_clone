@@ -127,17 +127,26 @@ class HBNBCommand(cmd.Cmd):
     def precmd(self, line):
         """Retrieve all instances of a class
         """
+        all_objs = storage.all()
+
         for cl_name in self.classes:
             if line == "{}.all()".format(cl_name):
-                all_objs = storage.all()
-                obj_list = [str(obj_v) for obj_v in all_objs.values()]
+                obj_list = [str(all_objs[k]) for k in all_objs.keys()
+                            if k.split('.')[0] == cl_name]
                 print(obj_list)
                 return ''
             elif line == "{}.count()".format(cl_name):
-                all_objs = storage.all()
-                obj_list = [str(obj_v) for obj_v in all_objs.values()]
+                obj_list = [str(all_objs[k]) for k in all_objs.keys()
+                            if k.split('.')[0] == cl_name]
                 print(len(obj_list))
                 return ''
+            elif line.split('.')[0] == cl_name:
+                for ob in all_objs.keys():
+                    if line == "{}.show(\"{}\")".format(cl_name,
+                                                        str(ob.split('.')[1])):
+                        new_line = cl_name + " " + str(ob.split('.')[1])
+                        self.do_show(new_line)
+                        return ''
         else:
             return line
 
