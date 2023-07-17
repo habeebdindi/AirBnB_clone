@@ -147,6 +147,13 @@ class HBNBCommand(cmd.Cmd):
                         new_line = cl_name + " " + str(ob.split('.')[1])
                         self.do_show(new_line)
                         return ''
+
+                    elif line == "{}.destroy(\"{}\")".format(cl_name,
+                                                             str(ob.split('.')
+                                                                 [1])):
+                        new_line = cl_name + " " + str(ob.split('.')[1])
+                        self.do_destroy(new_line)
+                        return ''
         else:
             return line
 
