@@ -32,8 +32,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_init_without_kwargs(self):
         """
-        Testing for the __init__ call
-        without **kwargs
+        Testing for the __init__ call without **kwargs
         """
         obj = BaseModel()
         self.assertIsInstance(obj.id, str)    # Testing if obj.id is of type str
@@ -44,19 +43,17 @@ class TestBaseModel(unittest.TestCase):
 
     def test_str_representation(self):
         """
-        Testing the __str__ representation of
-        the BaseModel class
+        Testing the __str__ representation of the BaseModel class
         """
-        obj = BaseModel(id='abcd')
-        expected_str = "[BaseModel] (abcd) {'id': 'abcd', 'created_at': datetime, 'updated_at': datetime}"
+        obj = BaseModel(id='abcd', created_at=datetime(2023, 7, 18, 12, 34, 56, 789000), updated_at=datetime(2023, 7, 18, 12, 34, 56, 789000))
+        expected_str = f"[BaseModel] (abcd) {{'id': 'abcd', 'created_at': {self.created_at.isoformat()}, 'updated_at': {self.updated_at.isoformat()}}}"
         self.assertEqual(str(obj), expected_str)
 
     def test_to_dict(self):
         """
-        Testing tht to_dict() method of
-        the BaseModel class
+        Testing the to_dict() method of the BaseModel class
         """
-        obj = BaseModel(id='xyz', created_at=datetime(2023, 7, 18, 12, 34, 56, 789000))
+        obj = BaseModel(id='xyz', created_at=datetime(2023, 7, 18, 12, 34, 56, 789000).isoformat()) # Fix error by calling isoformat()
         obj_dict = obj.to_dict()
         self.assertEqual(obj_dict['__class__'], 'BaseModel')
         self.assertEqual(obj_dict['id'], 'xyz')
